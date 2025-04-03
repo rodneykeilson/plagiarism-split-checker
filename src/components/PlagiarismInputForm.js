@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { calculateFinalPlagiarismPercentage } from '../utils/plagiarismCalculator';
 
-function PlagiarismInputForm({ chunks }) {
+function PlagiarismInputForm({ chunks, initialValues }) {
   const [plagiarismValues, setPlagiarismValues] = useState(
     Object.fromEntries(chunks.map((_, index) => [index, 0]))
   );
   const [finalPercentage, setFinalPercentage] = useState(null);
+
+  // Update plagiarism values when initialValues changes
+  useEffect(() => {
+    if (initialValues && initialValues.length > 0) {
+      const newValues = Object.fromEntries(
+        initialValues.map((value, index) => [index, value])
+      );
+      setPlagiarismValues(newValues);
+      
+      // Also calculate final result if we have initial values
+      const chunksWithPlagiarism = chunks.map((chunk, index) => ({
+        ...chunk,
+        plagiarismPercentage: initialValues[index] || 0
+      }));
+      
+      const result = calculateFinalPlagiarismPercentage(chunksWithPlagiarism);
+      setFinalPercentage(result);
+    }
+  }, [initialValues, chunks]);
 
   const handlePlagiarismChange = (index, value) => {
     const numValue = Math.min(100, Math.max(0, parseFloat(value) || 0));
@@ -25,6 +44,12 @@ function PlagiarismInputForm({ chunks }) {
   return (
     <div className="plagiarism-form-container">
       <h2>Step 3: Enter Plagiarism Results</h2>
+      
+      {initialValues && initialValues.length > 0 && (
+        <div className="auto-values-notice">
+          <p>Values from automatic checking have been applied. You can adjust them if needed.</p>
+        </div>
+      )}
       
       <div className="plagiarism-inputs">
         {chunks.map((chunk, index) => (

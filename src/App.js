@@ -6,10 +6,13 @@ import FileUploader from './components/FileUploader';
 import TextSplitter from './components/TextSplitter';
 import ChunksList from './components/ChunksList';
 import PlagiarismInputForm from './components/PlagiarismInputForm';
+import AutomaticChecker from './components/AutomaticChecker';
 
 function App() {
   const [extractedText, setExtractedText] = useState('');
   const [chunks, setChunks] = useState([]);
+  const [autoResults, setAutoResults] = useState([]);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleTextExtracted = (text) => {
     setExtractedText(text);
@@ -19,12 +22,21 @@ function App() {
     setChunks(generatedChunks);
   };
 
+  const handleAutomaticResults = (results) => {
+    setAutoResults(results);
+  };
+
+  // Handle switch between manual and automatic mode
+  const handleModeSwitch = (showAdvanced) => {
+    setShowAdvanced(showAdvanced);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Plagiarism Split Checker</h1>
         <p className="App-description">
-          Split large documents, check plagiarism in small chunks, and calculate the final percentage.
+          Split large documents, check plagiarism in chunks, and calculate the final percentage.
         </p>
       </header>
       
@@ -40,14 +52,43 @@ function App() {
         
         {chunks.length > 0 && (
           <>
-            <ChunksList chunks={chunks} />
-            <PlagiarismInputForm chunks={chunks} />
+            <div className="method-selector">
+              <button 
+                className={`method-button ${!showAdvanced ? 'active' : ''}`}
+                onClick={() => handleModeSwitch(false)}
+              >
+                Manual Checking
+              </button>
+              <button 
+                className={`method-button ${showAdvanced ? 'active' : ''}`}
+                onClick={() => handleModeSwitch(true)}
+              >
+                Automatic Checking (Experimental)
+              </button>
+            </div>
+            
+            {!showAdvanced ? (
+              <>
+                <ChunksList chunks={chunks} />
+                <PlagiarismInputForm 
+                  chunks={chunks} 
+                  initialValues={autoResults.length > 0 ? 
+                    autoResults.map(result => result.plagiarismPercentage) : 
+                    undefined}
+                />
+              </>
+            ) : (
+              <AutomaticChecker 
+                chunks={chunks} 
+                onResultsObtained={handleAutomaticResults}
+              />
+            )}
           </>
         )}
       </main>
       
       <footer className="App-footer">
-        <p>© 2023 Plagiarism Split Checker</p>
+        <p>© 2025 Plagiarism Split Checker</p>
       </footer>
     </div>
   );

@@ -68,3 +68,132 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Plagiarism Split Checker
+
+This application helps check plagiarism in large documents by splitting them into smaller chunks that can be processed by free plagiarism checking services.
+
+## Features
+
+- Upload and process .txt, .docx, and .pdf files
+- Extract text content automatically
+- Split text into chunks of customizable size (default: 1000 words)
+- Easy copy-to-clipboard functionality for each chunk
+- Calculate weighted average plagiarism percentage based on chunk size
+
+## Automatic Checking (Experimental)
+
+The application includes a demonstration of how automatic checking with services like DupliChecker could work. However, a complete implementation would require:
+
+### Server-Side Implementation
+
+To fully implement automatic checking with plagiarism services, you would need:
+
+1. **Backend Server**: Create a Node.js, Python, or other server that can:
+   - Receive text chunks from the frontend
+   - Submit them to plagiarism checking services
+   - Parse the results and return them to the frontend
+
+2. **Web Scraping**: Use libraries like Puppeteer (Node.js) or Selenium (Python) to:
+   - Navigate to the plagiarism checking service
+   - Input the text content
+   - Submit the form
+   - Wait for results
+   - Extract the plagiarism percentage from the page
+
+3. **CAPTCHA Handling**: Many plagiarism services use CAPTCHA to prevent automation. Options include:
+   - Manual CAPTCHA solving integration
+   - CAPTCHA solving services (with ethical considerations)
+   - Rate limiting your requests to avoid triggering CAPTCHA
+
+4. **Rate Limiting & IP Rotation**: To avoid getting blocked:
+   - Implement delays between requests
+   - Potentially use IP rotation if necessary
+   - Respect the website's robots.txt and terms of service
+
+### Example Server Implementation (Conceptual)
+
+```javascript
+// Node.js example with Express and Puppeteer
+const express = require('express');
+const puppeteer = require('puppeteer');
+const app = express();
+
+app.use(express.json());
+
+app.post('/check-plagiarism', async (req, res) => {
+  const { text } = req.body;
+  
+  try {
+    const result = await checkPlagiarism(text);
+    res.json({ success: true, percentage: result });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+});
+
+async function checkPlagiarism(text) {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  
+  try {
+    // Navigate to DupliChecker
+    await page.goto('https://www.duplichecker.com/');
+    
+    // Fill the text input
+    await page.type('#textArea', text);
+    
+    // Click check button
+    await page.click('#btnCheck');
+    
+    // Wait for results to load
+    await page.waitForSelector('.result-text', { timeout: 60000 });
+    
+    // Extract percentage from the results page
+    const percentage = await page.evaluate(() => {
+      const resultText = document.querySelector('.result-text').innerText;
+      const match = resultText.match(/(\d+(\.\d+)?)%/);
+      return match ? parseFloat(match[1]) : 0;
+    });
+    
+    return percentage;
+  } finally {
+    await browser.close();
+  }
+}
+
+app.listen(3001, () => {
+  console.log('Plagiarism checking server running on port 3001');
+});
+```
+
+### Legal and Ethical Considerations
+
+Before implementing automatic checking, consider:
+
+- Review the Terms of Service of plagiarism checking websites
+- Understand fair use policies and rate limiting
+- Implement proper delays to avoid overloading the services
+- Consider purchasing API access if the service offers it
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies
+```bash
+npm install
+```
+3. Start the application
+```bash
+npm start
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
