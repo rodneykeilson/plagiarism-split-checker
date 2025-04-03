@@ -372,3 +372,132 @@ h2 {
 .chunks-instruction a:hover {
   text-decoration: underline;
 }
+
+/* AutomaticChecker Styles */
+.automatic-checker-container {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.automatic-checker-info {
+  background-color: #fff8e1;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #ffc107;
+}
+
+.automatic-checker-info ul {
+  text-align: left;
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+}
+
+.automatic-checker-info li {
+  margin-bottom: 0.3rem;
+}
+
+.automatic-check-button {
+  background-color: #673ab7;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  margin-bottom: 1rem;
+}
+
+.automatic-check-button:hover:not(:disabled) {
+  background-color: #5e35b1;
+}
+
+.automatic-check-button:disabled {
+  background-color: #b39ddb;
+  cursor: not-allowed;
+}
+
+.checking-status {
+  margin-top: 1rem;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #673ab7;
+  transition: width 0.3s ease;
+}
+
+.results-preview {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background-color: #f3e5f5;
+  border-radius: 6px;
+}
+
+.results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.result-item {
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 4px;
+  border-left: 3px solid #673ab7;
+}
+
+/* Method Selector Styles */
+.method-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  gap: 10px;
+}
+
+.method-button {
+  padding: 0.6rem 1.2rem;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.method-button.active {
+  background-color: #4285f4;
+  color: white;
+  border-color: #4285f4;
+}
+
+.method-button:hover:not(.active) {
+  background-color: #f5f5f5;
+}
+
+.final-result {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  background-color: #e1f5fe;
+  border-radius: 6px;
+  border-left: 4px solid #03a9f4;
+}
+
+.final-result h3 {
+  margin-top: 0;
+  color: #0277bd;
+  font-size: 1.2rem;
+}
