@@ -61,9 +61,10 @@ function App() {
               </button>
               <button 
                 className={`method-button ${showAdvanced ? 'active' : ''}`}
-                onClick={() => handleModeSwitch(true)}
+                disabled
+                style={{ opacity: 0.5, cursor: 'not-allowed' }}
               >
-                Automatic Checking (Experimental)
+                Automatic Checking (Unavailable)
               </button>
             </div>
             
@@ -78,10 +79,10 @@ function App() {
                 />
               </>
             ) : (
-              <AutomaticChecker 
-                chunks={chunks} 
-                onResultsObtained={handleAutomaticResults}
-              />
+              <div style={{ color: '#c00', background: '#fff3f3', padding: '1.2rem', borderRadius: 8, marginTop: 16 }}>
+                <strong>Automatic Checking is currently unavailable.</strong>
+                <br />This feature is not yet implemented. Please use Manual Checking.
+              </div>
             )}
           </>
         )}
