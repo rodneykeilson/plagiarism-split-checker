@@ -6,7 +6,6 @@ import FileUploader from './components/FileUploader';
 import TextSplitter from './components/TextSplitter';
 import ChunksList from './components/ChunksList';
 import PlagiarismInputForm from './components/PlagiarismInputForm';
-import AutomaticChecker from './components/AutomaticChecker';
 
 function App() {
   const [extractedText, setExtractedText] = useState('');
@@ -22,10 +21,7 @@ function App() {
     setChunks(generatedChunks);
   };
 
-  const handleAutomaticResults = (results) => {
-    setAutoResults(results);
-  };
-
+  
   // Handle switch between manual and automatic mode
   const handleModeSwitch = (showAdvanced) => {
     setShowAdvanced(showAdvanced);
