@@ -10,7 +10,7 @@ import PlagiarismInputForm from './components/PlagiarismInputForm';
 function App() {
   const [extractedText, setExtractedText] = useState('');
   const [chunks, setChunks] = useState([]);
-  const [autoResults, setAutoResults] = useState([]);
+  
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const handleTextExtracted = (text) => {
@@ -69,9 +69,7 @@ function App() {
                 <ChunksList chunks={chunks} />
                 <PlagiarismInputForm 
                   chunks={chunks} 
-                  initialValues={autoResults.length > 0 ? 
-                    autoResults.map(result => result.plagiarismPercentage) : 
-                    undefined}
+                  
                 />
               </>
             ) : (
