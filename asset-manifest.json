@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/plagiarism-split-checker/static/css/main.13d95815.css",
+    "main.js": "/plagiarism-split-checker/static/js/main.a784dc82.js",
+    "static/js/633.c3aeda97.chunk.js": "/plagiarism-split-checker/static/js/633.c3aeda97.chunk.js",
+    "static/js/903.ed9f6210.chunk.js": "/plagiarism-split-checker/static/js/903.ed9f6210.chunk.js",
+    "static/js/239.210c560c.chunk.js": "/plagiarism-split-checker/static/js/239.210c560c.chunk.js",
+    "static/js/977.788291b5.chunk.js": "/plagiarism-split-checker/static/js/977.788291b5.chunk.js",
+    "static/js/732.68cca6f5.chunk.js": "/plagiarism-split-checker/static/js/732.68cca6f5.chunk.js",
+    "static/js/453.9f7c93c5.chunk.js": "/plagiarism-split-checker/static/js/453.9f7c93c5.chunk.js",
+    "static/js/749.6853f29f.chunk.js": "/plagiarism-split-checker/static/js/749.6853f29f.chunk.js",
+    "index.html": "/plagiarism-split-checker/index.html",
+    "main.13d95815.css.map": "/plagiarism-split-checker/static/css/main.13d95815.css.map",
+    "main.a784dc82.js.map": "/plagiarism-split-checker/static/js/main.a784dc82.js.map",
+    "633.c3aeda97.chunk.js.map": "/plagiarism-split-checker/static/js/633.c3aeda97.chunk.js.map",
+    "239.210c560c.chunk.js.map": "/plagiarism-split-checker/static/js/239.210c560c.chunk.js.map",
+    "977.788291b5.chunk.js.map": "/plagiarism-split-checker/static/js/977.788291b5.chunk.js.map",
+    "732.68cca6f5.chunk.js.map": "/plagiarism-split-checker/static/js/732.68cca6f5.chunk.js.map",
+    "453.9f7c93c5.chunk.js.map": "/plagiarism-split-checker/static/js/453.9f7c93c5.chunk.js.map",
+    "749.6853f29f.chunk.js.map": "/plagiarism-split-checker/static/js/749.6853f29f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.13d95815.css",
+    "static/js/main.a784dc82.js"
+  ]
+}
