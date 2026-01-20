@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 const ProgressContext = createContext();
 
@@ -12,17 +12,22 @@ export const useProgress = () => {
 
 export const ProgressProvider = ({ children }) => {
   const [savedProgress, setSavedProgress] = useState(() => {
+    if (typeof window === 'undefined') return null;
     const saved = localStorage.getItem('plagiarismProgress');
     return saved ? JSON.parse(saved) : null;
   });
 
   const saveProgress = (data) => {
-    localStorage.setItem('plagiarismProgress', JSON.stringify(data));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('plagiarismProgress', JSON.stringify(data));
+    }
     setSavedProgress(data);
   };
 
   const clearProgress = () => {
-    localStorage.removeItem('plagiarismProgress');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('plagiarismProgress');
+    }
     setSavedProgress(null);
   };
 
