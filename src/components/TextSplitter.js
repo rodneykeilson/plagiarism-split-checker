@@ -11,7 +11,8 @@ function TextSplitter({ text, onChunksGenerated }) {
       setChunks(generatedChunks);
       onChunksGenerated(generatedChunks);
     }
-  }, [text, maxWordsPerChunk, onChunksGenerated]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, maxWordsPerChunk]);
 
   return (
     <div className="splitter-container">

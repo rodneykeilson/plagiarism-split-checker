@@ -29,20 +29,25 @@ function App() {
       setCurrentStep(saved.currentStep || 1);
       setFinalResult(saved.finalResult || null);
     }
-  }, [loadProgress]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Auto-save progress
   useEffect(() => {
     if (extractedText || chunks.length > 0) {
-      saveProgress({
-        extractedText,
-        chunks,
-        currentStep,
-        finalResult,
-        timestamp: Date.now()
-      });
+      const timeoutId = setTimeout(() => {
+        saveProgress({
+          extractedText,
+          chunks,
+          currentStep,
+          finalResult,
+          timestamp: Date.now()
+        });
+      }, 500);
+      return () => clearTimeout(timeoutId);
     }
-  }, [extractedText, chunks, currentStep, finalResult, saveProgress]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extractedText, chunks, currentStep, finalResult]);
 
   const handleTextExtracted = (text) => {
     setExtractedText(text);
