@@ -14,5 +14,16 @@ module.exports = function override(config, env) {
     "assert": false
   };
   
+  // Fix localStorage issue during build
+  if (env === 'production') {
+    const HtmlWebpackPlugin = require('html-webpack-plugin');
+    config.plugins.forEach(plugin => {
+      if (plugin instanceof HtmlWebpackPlugin) {
+        plugin.userOptions.scriptLoading = 'defer';
+        plugin.userOptions.inject = 'body';
+      }
+    });
+  }
+  
   return config;
 } 
