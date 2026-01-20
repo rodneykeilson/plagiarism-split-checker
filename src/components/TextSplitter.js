@@ -15,7 +15,7 @@ function TextSplitter({ text, onChunksGenerated }) {
 
   return (
     <div className="splitter-container">
-      <h2>Step 2: Text Splitting</h2>
+      <h2>✂️ Step 2: Configure Text Splitting</h2>
       
       <div className="input-group">
         <label htmlFor="max-words">
@@ -33,7 +33,10 @@ function TextSplitter({ text, onChunksGenerated }) {
       
       <div className="info-box">
         <p>
-          Your text has been split into {chunks.length} chunk{chunks.length !== 1 ? 's' : ''}.
+          ✅ Your text has been split into <strong>{chunks.length} chunk{chunks.length !== 1 ? 's' : ''}</strong>.
+          {chunks.length > 0 && (
+            <span> Total words: <strong>{chunks.reduce((sum, c) => sum + c.wordCount, 0)}</strong></span>
+          )}
         </p>
       </div>
     </div>
