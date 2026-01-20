@@ -40,7 +40,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "node --no-webstorage node_modules/react-app-rewired/scripts/build.js",
+    "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
