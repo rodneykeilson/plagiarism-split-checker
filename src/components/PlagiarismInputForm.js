@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { calculateFinalPlagiarismPercentage } from '../utils/plagiarismCalculator';
+import { exportToPDF } from '../utils/exportUtils';
+import { shareResults } from '../utils/shareUtils';
 
-function PlagiarismInputForm({ chunks, initialValues }) {
+function PlagiarismInputForm({ chunks, initialValues, onFinalResult }) {
   const [plagiarismValues, setPlagiarismValues] = useState(
     Object.fromEntries(chunks.map((_, index) => [index, 0]))
   );
   const [finalPercentage, setFinalPercentage] = useState(null);
+  const [shareMessage, setShareMessage] = useState('');
 
   // Update plagiarism values when initialValues changes
   useEffect(() => {
@@ -23,8 +26,9 @@ function PlagiarismInputForm({ chunks, initialValues }) {
       
       const result = calculateFinalPlagiarismPercentage(chunksWithPlagiarism);
       setFinalPercentage(result);
+      if (onFinalResult) onFinalResult(result);
     }
-  }, [initialValues, chunks]);
+  }, [initialValues, chunks, onFinalResult]);
 
   const handlePlagiarismChange = (index, value) => {
     const numValue = Math.min(100, Math.max(0, parseFloat(value) || 0));
@@ -39,6 +43,31 @@ function PlagiarismInputForm({ chunks, initialValues }) {
     
     const result = calculateFinalPlagiarismPercentage(chunksWithPlagiarism);
     setFinalPercentage(result);
+    if (onFinalResult) onFinalResult(result);
+  };
+
+  const handleExportPDF = () => {
+    const chunksWithPlagiarism = chunks.map((chunk, index) => ({
+      ...chunk,
+      plagiarismPercentage: plagiarismValues[index] || 0
+    }));
+    exportToPDF(chunksWithPlagiarism, finalPercentage);
+  };
+
+  const handleShare = async () => {
+    const chunksWithPlagiarism = chunks.map((chunk, index) => ({
+      ...chunk,
+      plagiarismPercentage: plagiarismValues[index] || 0
+    }));
+    
+    const success = await shareResults(finalPercentage, chunksWithPlagiarism);
+    if (success) {
+      setShareMessage('✅ Results copied to clipboard!');
+      setTimeout(() => setShareMessage(''), 3000);
+    } else {
+      setShareMessage('❌ Share failed');
+      setTimeout(() => setShareMessage(''), 3000);
+    }
   };
 
   return (
@@ -86,6 +115,21 @@ function PlagiarismInputForm({ chunks, initialValues }) {
           <p className="result-explanation">
             This is a weighted average based on each chunk's word count.
           </p>
+          
+          <div className="result-actions">
+            <button onClick={handleExportPDF} className="action-button export-button">
+              📄 Export to PDF
+            </button>
+            <button onClick={handleShare} className="action-button share-button">
+              🔗 Share Results
+            </button>
+          </div>
+          
+          {shareMessage && (
+            <div className="share-message">
+              {shareMessage}
+            </div>
+          )}
         </div>
       )}
     </div>
