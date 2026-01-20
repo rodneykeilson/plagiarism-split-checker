@@ -1,14 +1,33 @@
 {
-  "name": "gajelas",
-  "version": "0.1.0",
-  "private": true,
+  "name": "plagiarism-split-checker",
+  "version": "1.0.0",
+  "private": false,
+  "homepage": "https://rodneykeilson.github.io/plagiarism-split-checker",
+  "description": "A powerful React application to split large documents and check plagiarism with weighted results",
+  "author": "Rodney Keilson",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rodneykeilson/plagiarism-split-checker.git"
+  },
+  "keywords": [
+    "plagiarism",
+    "checker",
+    "document",
+    "split",
+    "react",
+    "pdf",
+    "docx"
+  ],
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "browserify-zlib": "^0.2.0",
+    "html2canvas": "^1.4.1",
     "https-browserify": "^1.0.0",
+    "jspdf": "^4.0.0",
     "mammoth": "^1.9.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^2.16.105",
@@ -23,7 +42,9 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "react-app-rewired": "^2.2.1"
   }
 }
