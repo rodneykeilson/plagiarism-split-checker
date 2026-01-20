@@ -28,7 +28,8 @@ function PlagiarismInputForm({ chunks, initialValues, onFinalResult }) {
       setFinalPercentage(result);
       if (onFinalResult) onFinalResult(result);
     }
-  }, [initialValues, chunks, onFinalResult]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialValues]);
 
   const handlePlagiarismChange = (index, value) => {
     const numValue = Math.min(100, Math.max(0, parseFloat(value) || 0));
