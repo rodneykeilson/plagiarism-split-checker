@@ -17,19 +17,16 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
     setFinalPercentage(null);
     setError(null);
     
-    // This is a conceptual implementation
-    // In reality, you would need a backend server to handle this
     try {
       const newResults = [];
       
       for (let i = 0; i < chunks.length; i++) {
         setCurrentChunk(i);
         
-        // Simulate API call to your backend server
-        // In a real implementation, your backend would submit to DupliChecker
-        // and scrape/parse the results
+        // Simulate API call - in production, this would call your backend
         const result = await simulateCheckChunk(chunks[i].text);
         newResults.push(result);
+        setResults([...newResults]); // Update UI progressively
       }
       
       setResults(newResults);
@@ -43,7 +40,9 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
       const finalResult = calculateFinalPlagiarismPercentage(chunksWithPlagiarism);
       setFinalPercentage(finalResult);
       
-      onResultsObtained(chunksWithPlagiarism);
+      if (onResultsObtained) {
+        onResultsObtained(chunksWithPlagiarism);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
@@ -51,12 +50,10 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
     }
   };
   
-  // This is just a simulation - in reality this would be an API call to your backend
+  // Simulation function - replace with actual API call
   const simulateCheckChunk = async (text) => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 2000));
     
-    // Return a random percentage (for demo purposes only)
     return {
       percentage: Math.floor(Math.random() * 30),
       text: text.substring(0, 50) + '...'
@@ -65,69 +62,72 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
 
   return (
     <div className="automatic-checker-container">
-      <h2>Automatic Plagiarism Checking</h2>
+      <h2>🤖 Automatic Plagiarism Checking</h2>
+      
       <div className="automatic-checker-info">
         <p>
-          <strong>Note:</strong> This is a demonstration of how automatic checking could work.
-          Implementing this feature would require a backend server to bypass CORS and handle
-          the submission to DupliChecker.com.
+          <strong>⚠️ Demo Mode:</strong> This simulates automatic checking with random results.
         </p>
         <p>
-          Full implementation would require:
+          <strong>Production Implementation Would Require:</strong>
         </p>
         <ul>
-          <li>A server-side component to interact with plagiarism checking sites</li>
-          <li>Puppeteer or similar browser automation library</li>
-          <li>Handling of CAPTCHAs and rate limits</li>
-          <li>Parsing of results from the HTML response</li>
+          <li>Backend API server (Node.js/Express or Python/Flask)</li>
+          <li>Web scraping with Puppeteer/Playwright or Selenium</li>
+          <li>CAPTCHA handling solutions (2Captcha, Anti-Captcha)</li>
+          <li>Rate limiting and retry logic</li>
+          <li>Proxy rotation to avoid IP bans</li>
         </ul>
       </div>
       
-      <button 
-        onClick={startAutomaticCheck}
-        disabled={isChecking}
-        className="automatic-check-button"
-      >
-        {isChecking ? 'Checking...' : 'Simulate Automatic Check'}
-      </button>
-      
-      {isChecking && (
-        <div className="checking-status">
-          <p>Checking chunk {currentChunk + 1} of {chunks.length}...</p>
-          <div className="progress-bar">
-            <div 
-              className="progress" 
-              style={{ width: `${((currentChunk + 1) / chunks.length) * 100}%` }}
-            ></div>
-          </div>
-        </div>
+      {!isChecking && results.length === 0 && (
+        <button 
+          onClick={startAutomaticCheck}
+          className="automatic-check-button"
+        >
+          🚀 Start Automatic Check (Demo)
+        </button>
       )}
       
       {error && (
         <div className="error-message">
-          {error}
+          <strong>Error:</strong> {error}
         </div>
       )}
       
-      {results.length > 0 && (
+      {isChecking && (
+        <div className="checking-status">
+          <p className="checking-text">
+            🔍 Checking chunk {currentChunk + 1} of {chunks.length}...
+          </p>
+          <div className="progress-bar">
+            <div 
+              className="progress" 
+              style={{ width: `${((currentChunk + 1) / chunks.length) * 100}%` }}
+            />
+          </div>
+          <p className="progress-percentage">
+            {Math.round(((currentChunk + 1) / chunks.length) * 100)}% Complete
+          </p>
+        </div>
+      )}
+      
+      {results.length > 0 && !isChecking && (
         <div className="results-preview">
-          <h3>Results Summary:</h3>
+          <h3>✅ Checking Complete!</h3>
           <div className="results-list">
             {results.map((result, index) => (
               <div key={index} className="result-item">
-                <span>Chunk {index + 1}: {result.percentage}% plagiarism</span>
+                <strong>Chunk {index + 1}:</strong> {result.percentage}% plagiarism
               </div>
             ))}
           </div>
           
           {finalPercentage !== null && (
             <div className="final-result">
-              <h3>Final Weighted Result:</h3>
-              <p className="final-percentage">
+              <h3>Final Result (Weighted Average)</h3>
+              <p className="final-percentage-large">
                 {finalPercentage.toFixed(2)}% Plagiarism
-              </p>
-              <p className="result-explanation">
-                This is a weighted average based on each chunk's word count.
               </p>
             </div>
           )}
