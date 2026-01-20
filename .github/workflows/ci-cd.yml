@@ -68,6 +68,9 @@ jobs:
     needs: build
     if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
     
+    permissions:
+      contents: write
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
