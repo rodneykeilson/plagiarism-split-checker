@@ -1,8 +1,6 @@
-/**
- * Extract text from uploaded files (.docx or .pdf)
- * @param {File} file File object to process
- * @returns {Promise<string>} Promise resolving to the extracted text
- */
+import mammoth from 'mammoth';
+import * as pdfjsLib from 'pdfjs-dist';
+
 export const extractTextFromFile = async (file) => {
     return new Promise((resolve, reject) => {
         const fileType = file.name.split('.').pop()?.toLowerCase();
@@ -19,9 +17,7 @@ export const extractTextFromFile = async (file) => {
                         reject(new Error('Failed to read file'));
                         return;
                     }
-                    
-                    // Import mammoth dynamically to handle the browser environment
-                    const mammoth = await import('mammoth');
+
                     const arrayBuffer = e.target.result;
                     const result = await mammoth.extractRawText({ arrayBuffer });
                     resolve(result.value);
@@ -38,9 +34,7 @@ export const extractTextFromFile = async (file) => {
                         reject(new Error('Failed to read file'));
                         return;
                     }
-                    
-                    // Use pdfjs-dist instead of pdf-parse
-                    const pdfjsLib = await import('pdfjs-dist');
+
                     pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
                     
                     const arrayBuffer = e.target.result;

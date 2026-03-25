@@ -11,12 +11,11 @@ function TextSplitter({ text, onChunksGenerated }) {
       setChunks(generatedChunks);
       onChunksGenerated(generatedChunks);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [text, maxWordsPerChunk]);
+  }, [text, maxWordsPerChunk, onChunksGenerated]);
 
   return (
     <div className="splitter-container">
-      <h2>✂️ Step 2: Configure Text Splitting</h2>
+      <h2>Step 2: Configure Splitting</h2>
       
       <div className="input-group">
         <label htmlFor="max-words">
@@ -34,7 +33,7 @@ function TextSplitter({ text, onChunksGenerated }) {
       
       <div className="info-box">
         <p>
-          ✅ Your text has been split into <strong>{chunks.length} chunk{chunks.length !== 1 ? 's' : ''}</strong>.
+          The text is split into <strong>{chunks.length} chunk{chunks.length !== 1 ? 's' : ''}</strong>.
           {chunks.length > 0 && (
             <span> Total words: <strong>{chunks.reduce((sum, c) => sum + c.wordCount, 0)}</strong></span>
           )}

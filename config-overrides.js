@@ -1,5 +1,4 @@
 module.exports = function override(config, env) {
-  // Add fallbacks for node modules
   config.resolve.fallback = {
     ...config.resolve.fallback,
     "fs": false,
@@ -14,7 +13,6 @@ module.exports = function override(config, env) {
     "assert": false
   };
   
-  // Fix localStorage issue during build
   if (env === 'production') {
     const HtmlWebpackPlugin = require('html-webpack-plugin');
     config.plugins.forEach(plugin => {

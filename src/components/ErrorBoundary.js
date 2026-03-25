@@ -27,7 +27,7 @@ class ErrorBoundary extends React.Component {
           boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
           textAlign: 'center'
         }}>
-          <h1 style={{ color: '#d32f2f', marginBottom: '1rem' }}>⚠️ Oops! Something went wrong</h1>
+          <h1 style={{ color: '#d32f2f', marginBottom: '1rem' }}>Something went wrong</h1>
           <p style={{ color: '#666', marginBottom: '1.5rem' }}>
             We encountered an unexpected error. Please refresh the page or try again later.
           </p>
@@ -67,7 +67,7 @@ class ErrorBoundary extends React.Component {
               cursor: 'pointer'
             }}
           >
-            🔄 Reload Page
+            Reload Page
           </button>
         </div>
       );

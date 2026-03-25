@@ -2,6 +2,15 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
 
+const getStorage = () => {
+  if (typeof window === 'undefined') return null;
+  try {
+    return window.localStorage;
+  } catch {
+    return null;
+  }
+};
+
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
@@ -12,16 +21,16 @@ export const useTheme = () => {
 
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const saved = localStorage.getItem('darkMode');
+    const storage = getStorage();
+    if (!storage) return false;
+    const saved = storage.getItem('darkMode');
     return saved ? JSON.parse(saved) : false;
   });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('darkMode', JSON.stringify(isDarkMode));
-      document.body.classList.toggle('dark-mode', isDarkMode);
-    }
+    const storage = getStorage();
+    if (storage) storage.setItem('darkMode', JSON.stringify(isDarkMode));
+    if (typeof document !== 'undefined') document.body.classList.toggle('dark-mode', isDarkMode);
   }, [isDarkMode]);
 
   const toggleTheme = () => {

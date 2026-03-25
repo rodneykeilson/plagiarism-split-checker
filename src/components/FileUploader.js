@@ -67,7 +67,7 @@ function FileUploader({ onTextExtracted }) {
 
   return (
     <div className="uploader-container">
-      <h2>📤 Step 1: Upload Document</h2>
+      <h2>Step 1: Upload Document</h2>
       <div 
         className={`upload-box ${isDragging ? 'dragging' : ''} ${isProcessing ? 'processing' : ''}`}
         onDragEnter={handleDragEnter}
@@ -87,19 +87,18 @@ function FileUploader({ onTextExtracted }) {
           style={{ display: 'none' }}
         />
         <div className="upload-content">
-          <div className="upload-icon">{isProcessing ? '⏳' : '📄'}</div>
           <p className="upload-text">
-            {isProcessing ? 'Processing your file...' : 'Drag & drop your file here or click to browse'}
+            {isProcessing ? 'Processing file...' : 'Drop a file here or click to browse'}
           </p>
           <p className="upload-hint">
-            {isProcessing ? 'This may take a few moments for large files' : 'Supports .txt, .docx, and .pdf files'}
+            {isProcessing ? 'Large files can take a few seconds.' : 'Supports .txt, .docx, and .pdf'}
           </p>
         </div>
       </div>
       
       {error && (
         <div className="error-message">
-          <strong>❌ Error:</strong> {error}
+          <strong>Error:</strong> {error}
         </div>
       )}
     </div>

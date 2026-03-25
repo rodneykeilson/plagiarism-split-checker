@@ -15,7 +15,7 @@ const renderWithProviders = (component) => {
 
 test('renders plagiarism split checker heading', () => {
   renderWithProviders(<App />);
-  const headingElement = screen.getByRole('heading', { name: /📄 Plagiarism Split Checker/i });
+  const headingElement = screen.getByRole('heading', { name: /Plagiarism Split Checker/i });
   expect(headingElement).toBeInTheDocument();
 });
 

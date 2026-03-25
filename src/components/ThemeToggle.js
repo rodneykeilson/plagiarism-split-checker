@@ -11,7 +11,7 @@ function ThemeToggle() {
       aria-label="Toggle dark mode"
       title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      {isDarkMode ? '☀️' : '🌙'}
+      {isDarkMode ? 'Light' : 'Dark'}
     </button>
   );
 }

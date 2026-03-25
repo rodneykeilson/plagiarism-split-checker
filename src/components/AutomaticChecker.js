@@ -23,7 +23,6 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
       for (let i = 0; i < chunks.length; i++) {
         setCurrentChunk(i);
         
-        // Simulate API call - in production, this would call your backend
         const result = await simulateCheckChunk(chunks[i].text);
         newResults.push(result);
         setResults([...newResults]); // Update UI progressively
@@ -31,7 +30,6 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
       
       setResults(newResults);
       
-      // Calculate final percentage
       const chunksWithPlagiarism = chunks.map((chunk, index) => ({
         ...chunk,
         plagiarismPercentage: newResults[index].percentage
@@ -50,7 +48,6 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
     }
   };
   
-  // Simulation function - replace with actual API call
   const simulateCheckChunk = async (text) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
@@ -62,14 +59,14 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
 
   return (
     <div className="automatic-checker-container">
-      <h2>🤖 Automatic Plagiarism Checking</h2>
+      <h2>Automatic Check Preview</h2>
       
       <div className="automatic-checker-info">
         <p>
-          <strong>⚠️ Demo Mode:</strong> This simulates automatic checking with random results.
+          <strong>Preview mode:</strong> This generates sample values locally.
         </p>
         <p>
-          <strong>Production Implementation Would Require:</strong>
+          <strong>For production automation, you would need:</strong>
         </p>
         <ul>
           <li>Backend API server (Node.js/Express or Python/Flask)</li>
@@ -85,7 +82,7 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
           onClick={startAutomaticCheck}
           className="automatic-check-button"
         >
-          🚀 Start Automatic Check (Demo)
+          Start Automatic Preview
         </button>
       )}
       
@@ -98,7 +95,7 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
       {isChecking && (
         <div className="checking-status">
           <p className="checking-text">
-            🔍 Checking chunk {currentChunk + 1} of {chunks.length}...
+            Checking chunk {currentChunk + 1} of {chunks.length}...
           </p>
           <div className="progress-bar">
             <div 
@@ -114,7 +111,7 @@ function AutomaticChecker({ chunks, onResultsObtained }) {
       
       {results.length > 0 && !isChecking && (
         <div className="results-preview">
-          <h3>✅ Checking Complete!</h3>
+          <h3>Preview Complete</h3>
           <div className="results-list">
             {results.map((result, index) => (
               <div key={index} className="result-item">

@@ -1,13 +1,6 @@
-/**
- * Share plagiarism results using Web Share API or clipboard
- * @param {number} finalPercentage - Final plagiarism percentage
- * @param {Array} chunks - Array of chunks
- * @returns {Promise<boolean>} - Success status
- */
 export const shareResults = async (finalPercentage, chunks) => {
   const shareText = generateShareText(finalPercentage, chunks);
-  
-  // Try Web Share API first (mobile-friendly)
+
   if (navigator.share) {
     try {
       await navigator.share({
@@ -19,20 +12,13 @@ export const shareResults = async (finalPercentage, chunks) => {
       if (err.name !== 'AbortError') {
         console.error('Share failed:', err);
       }
-      // Fall back to clipboard
       return copyToClipboard(shareText);
     }
   } else {
-    // Fall back to clipboard for desktop
     return copyToClipboard(shareText);
   }
 };
 
-/**
- * Copy text to clipboard
- * @param {string} text - Text to copy
- * @returns {Promise<boolean>} - Success status
- */
 const copyToClipboard = async (text) => {
   try {
     await navigator.clipboard.writeText(text);
@@ -43,19 +29,13 @@ const copyToClipboard = async (text) => {
   }
 };
 
-/**
- * Generate formatted share text
- * @param {number} finalPercentage - Final plagiarism percentage
- * @param {Array} chunks - Array of chunks
- * @returns {string} - Formatted text
- */
 const generateShareText = (finalPercentage, chunks) => {
   const totalWords = chunks.reduce((sum, c) => sum + c.wordCount, 0);
-  
-  let text = `📄 Plagiarism Check Results\n\n`;
-  text += `🎯 Final Plagiarism: ${finalPercentage.toFixed(2)}%\n`;
-  text += `📊 Total Words: ${totalWords}\n`;
-  text += `📝 Chunks Analyzed: ${chunks.length}\n\n`;
+
+  let text = `Plagiarism Check Results\n\n`;
+  text += `Final Plagiarism: ${finalPercentage.toFixed(2)}%\n`;
+  text += `Total Words: ${totalWords}\n`;
+  text += `Chunks Analyzed: ${chunks.length}\n\n`;
   text += `Breakdown:\n`;
   
   chunks.forEach((chunk, index) => {
@@ -67,12 +47,6 @@ const generateShareText = (finalPercentage, chunks) => {
   return text;
 };
 
-/**
- * Get shareable URL with results encoded
- * @param {number} finalPercentage - Final plagiarism percentage
- * @param {Array} chunks - Array of chunks
- * @returns {string} - Shareable URL
- */
 export const getShareableURL = (finalPercentage, chunks) => {
   const data = {
     percentage: finalPercentage,

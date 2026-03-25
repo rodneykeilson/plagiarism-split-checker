@@ -1,6 +1,5 @@
 import { extractTextFromFile } from './fileProcessing';
 
-// Mock FileReader
 class MockFileReader {
   constructor() {
     this.onload = null;
@@ -41,7 +40,6 @@ describe('fileProcessing utilities', () => {
     });
 
     it('should handle file read errors', async () => {
-      // Override FileReader to simulate error
       const originalFileReader = global.FileReader;
       class ErrorFileReader extends MockFileReader {
         readAsText(file) {

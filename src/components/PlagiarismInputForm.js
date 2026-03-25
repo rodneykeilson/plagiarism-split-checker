@@ -10,26 +10,23 @@ function PlagiarismInputForm({ chunks, initialValues, onFinalResult }) {
   const [finalPercentage, setFinalPercentage] = useState(null);
   const [shareMessage, setShareMessage] = useState('');
 
-  // Update plagiarism values when initialValues changes
   useEffect(() => {
     if (initialValues && initialValues.length > 0) {
       const newValues = Object.fromEntries(
         initialValues.map((value, index) => [index, value])
       );
       setPlagiarismValues(newValues);
-      
-      // Also calculate final result if we have initial values
+
       const chunksWithPlagiarism = chunks.map((chunk, index) => ({
         ...chunk,
         plagiarismPercentage: initialValues[index] || 0
       }));
-      
+
       const result = calculateFinalPlagiarismPercentage(chunksWithPlagiarism);
       setFinalPercentage(result);
       if (onFinalResult) onFinalResult(result);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialValues]);
+  }, [initialValues, chunks, onFinalResult]);
 
   const handlePlagiarismChange = (index, value) => {
     const numValue = Math.min(100, Math.max(0, parseFloat(value) || 0));
@@ -63,10 +60,10 @@ function PlagiarismInputForm({ chunks, initialValues, onFinalResult }) {
     
     const success = await shareResults(finalPercentage, chunksWithPlagiarism);
     if (success) {
-      setShareMessage('✅ Results copied to clipboard!');
+      setShareMessage('Results copied to clipboard.');
       setTimeout(() => setShareMessage(''), 3000);
     } else {
-      setShareMessage('❌ Share failed');
+      setShareMessage('Share failed.');
       setTimeout(() => setShareMessage(''), 3000);
     }
   };
@@ -119,10 +116,10 @@ function PlagiarismInputForm({ chunks, initialValues, onFinalResult }) {
           
           <div className="result-actions">
             <button onClick={handleExportPDF} className="action-button export-button">
-              📄 Export to PDF
+              Export PDF
             </button>
             <button onClick={handleShare} className="action-button share-button">
-              🔗 Share Results
+              Share Results
             </button>
           </div>
           

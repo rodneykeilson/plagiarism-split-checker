@@ -9,7 +9,6 @@ describe('plagiarismCalculator utilities', () => {
         { wordCount: 500, plagiarismPercentage: 30 }
       ];
 
-      // (10*1000 + 20*1000 + 30*500) / 2500 = 45000 / 2500 = 18
       const result = calculateFinalPlagiarismPercentage(chunks);
       expect(result).toBe(18);
     });
@@ -50,7 +49,6 @@ describe('plagiarismCalculator utilities', () => {
         { wordCount: 900, plagiarismPercentage: 50 }
       ];
 
-      // (0*100 + 50*900) / 1000 = 45
       const result = calculateFinalPlagiarismPercentage(chunks);
       expect(result).toBe(45);
     });

@@ -2,7 +2,7 @@
   "name": "plagiarism-split-checker",
   "version": "1.0.0",
   "private": false,
-  "homepage": "https://vewaxio.github.io/plagiarism-split-checker",
+  "homepage": ".",
   "description": "A powerful React application to split large documents and check plagiarism with weighted results",
   "author": "Vewaxio",
   "license": "MIT",
@@ -39,9 +39,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "node scripts/run-rewired.js start",
+    "build": "node scripts/run-rewired.js build",
+    "test": "node scripts/run-rewired.js test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
@@ -65,7 +65,10 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.27",
     "gh-pages": "^6.3.0",
-    "react-app-rewired": "^2.2.1"
+    "postcss": "^8.5.8",
+    "react-app-rewired": "^2.2.1",
+    "tailwindcss": "^3.4.19"
   }
 }
